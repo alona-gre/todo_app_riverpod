@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_todo_app/src/common_widgets/primary_button.dart';
 import 'package:riverpod_todo_app/src/constants/app_sizes.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
+import 'package:riverpod_todo_app/src/routing/app_router.dart';
 
 /// Placeholder widget showing a message and CTA to go back to the home screen.
 class EmptyPlaceholderWidget extends StatelessWidget {
@@ -24,7 +26,7 @@ class EmptyPlaceholderWidget extends StatelessWidget {
             ),
             gapH32,
             PrimaryButton(
-              // onPressed: () => context.goNamed(AppRoute.home.name),
+              onPressed: () => context.goNamed(AppRoute.home.name),
               text: 'Go Home'.hardcoded,
             )
           ],

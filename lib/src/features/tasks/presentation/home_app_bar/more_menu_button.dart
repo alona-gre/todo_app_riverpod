@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
+import 'package:riverpod_todo_app/src/routing/app_router.dart';
 
 enum PopupMenuOption {
   signIn,
@@ -58,12 +60,7 @@ class MoreMenuButton extends StatelessWidget {
             // );
             break;
           case PopupMenuOption.account:
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     fullscreenDialog: true,
-            //     builder: (_) => const AccountScreen(),
-            //   ),
-            // );
+            context.goNamed(AppRoute.account.name);
             break;
         }
       },

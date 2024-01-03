@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_todo_app/src/features/app_drawer/presentation/app_drawer.dart';
-import 'package:riverpod_todo_app/src/features/tasks/presentation/task_list_screen.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
+import 'package:riverpod_todo_app/src/routing/app_router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       restorationScopeId: 'app',
-      home: const TaskListScreen(option: DrawerOption.allTasks),
+      routerConfig: goRouter,
       onGenerateTitle: (BuildContext context) => 'My To-Do app'.hardcoded,
       theme: ThemeData(
         visualDensity: const VisualDensity(),

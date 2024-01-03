@@ -29,6 +29,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           /// To-Do: Search();
           MoreMenuButton(),
         ],
+        leading: IconButton(
+          onPressed: () {
+            // if (!Platform.isAndroid && !Platform.isIOS) {
+            //   _controller.setExtended(true);
+            // }
+            Scaffold.of(context).openDrawer();
+            // _key.currentState?.openDrawer();
+          },
+          icon: const Icon(Icons.menu),
+        ),
       );
     } else {
       return AppBar(
