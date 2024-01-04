@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_todo_app/src/constants/test_products.dart';
-import 'package:riverpod_todo_app/src/features/tasks/domain/task.dart';
+import 'package:riverpod_todo_app/src/features/tasks/data/fake_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/task_list/task_list.dart';
 
 class AllTasksList extends StatelessWidget {
@@ -10,7 +9,8 @@ class AllTasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Task> taskList = kTestTasks;
+    final taskList = FakeTasksRepository.instance.getTasksList();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,7 +21,7 @@ class AllTasksList extends StatelessWidget {
                 Text('${taskList.length} Completed | ${taskList.length} All'),
           ),
         ),
-        const TasksList(taskList: taskList)
+        TasksList(taskList: taskList)
       ],
     );
   }

@@ -14,9 +14,9 @@ class TasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       fit: FlexFit.loose,
-      child: SingleChildScrollView(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
         child: ListView.builder(
-          shrinkWrap: true,
           itemCount: taskList.length,
           itemBuilder: (context, index) => TaskTile(
             task: taskList[index],

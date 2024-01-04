@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_todo_app/src/common_widgets/alert_dialogs.dart';
-import 'package:riverpod_todo_app/src/constants/test_products.dart';
+import 'package:riverpod_todo_app/src/features/tasks/data/fake_tasks_repository.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final String taskId;
@@ -14,9 +14,9 @@ class EditTaskScreen extends StatefulWidget {
 class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   Widget build(BuildContext context) {
-    final task = kTestTasks.firstWhere((task) => widget.taskId == task.id);
+    final task = FakeTasksRepository.instance.getTask(widget.taskId);
     TextEditingController titleController = TextEditingController(
-      text: task.title,
+      text: task!.title,
     );
     TextEditingController notesController =
         TextEditingController(text: task.notes);
