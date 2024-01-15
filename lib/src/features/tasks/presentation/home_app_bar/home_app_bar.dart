@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo_app/src/constants/breakpoints.dart';
+import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/home_app_bar/more_menu_button.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
@@ -9,11 +11,12 @@ import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 /// - [ShoppingCartIcon]
 /// - Orders button
 /// - Account or Sign-in button
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authStateChangesProvider).value;
     // * This widget is responsive.
     // * On large screen sizes, it shows all the actions in the app bar.
     // * On small screen sizes, it shows only the shopping cart icon and a
@@ -25,9 +28,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (screenWidth < Breakpoint.tablet) {
       return AppBar(
         title: Text('My To-Do app'.hardcoded),
-        actions: const [
-          /// To-Do: Search();
-          MoreMenuButton(),
+        actions: [
+          /// TODO: Search();
+          MoreMenuButton(user: user),
         ],
         leading: IconButton(
           onPressed: () {
@@ -43,9 +46,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     } else {
       return AppBar(
         title: Text('My To-Do app'.hardcoded),
-        actions: const [
+        actions: [
           /// To-Do: Search();
-          MoreMenuButton(),
+          MoreMenuButton(user: user),
         ],
       );
     }
