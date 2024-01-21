@@ -1,38 +1,48 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_todo_app/src/constants/test_products.dart';
+import 'package:riverpod_todo_app/src/constants/test_tasks.dart';
 import 'package:riverpod_todo_app/src/features/tasks/domain/task.dart';
+import 'package:riverpod_todo_app/src/utils/delay.dart';
 
 class FakeTasksRepository {
+  final bool hasDelay;
   final List<Task> _tasks = kTestTasks;
+
+  FakeTasksRepository({this.hasDelay = true});
 
   List<Task> getTasksList() {
     return _tasks;
   }
 
   Task? getTask(String id) {
-    return _tasks.firstWhere((tsk) => tsk.id == id);
+    return _getTask(_tasks, id);
   }
 
   Future<List<Task>> fetchTasks() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await delay(hasDelay);
     // throw Exception('Something is wrong');
     return Future.value(_tasks);
   }
 
   Stream<List<Task>> watchTasksList() async* {
-    await Future.delayed(const Duration(seconds: 2));
+    await delay(hasDelay);
     yield _tasks;
     // return Stream.value(_tasks);
   }
 
   Stream<Task?> watchTask(String id) {
     return watchTasksList().map(
-      (tasks) => tasks.firstWhere(
-        (tsk) => tsk.id == id,
-      ),
+      (tasks) => _getTask(tasks, id),
     );
+  }
+
+  static Task? _getTask(List<Task> tasks, String id) {
+    try {
+      return tasks.firstWhere((tsk) => tsk.id == id);
+    } catch (e) {
+      return null;
+    }
   }
 }
 

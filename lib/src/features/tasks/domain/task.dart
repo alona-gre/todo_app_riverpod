@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 /// Class representing a task.
 class Task {
   final String? title;
@@ -36,5 +37,34 @@ class Task {
       isDeleted: isDeleted ?? this.isDeleted,
       isFavorite: isFavorite ?? this.isFavorite,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Task(title: $title, notes: $notes, id: $id, createdDate: $createdDate, isDone: $isDone, isDeleted: $isDeleted, isFavorite: $isFavorite)';
+  }
+
+  @override
+  bool operator ==(covariant Task other) {
+    if (identical(this, other)) return true;
+
+    return other.title == title &&
+        other.notes == notes &&
+        other.id == id &&
+        other.createdDate == createdDate &&
+        other.isDone == isDone &&
+        other.isDeleted == isDeleted &&
+        other.isFavorite == isFavorite;
+  }
+
+  @override
+  int get hashCode {
+    return title.hashCode ^
+        notes.hashCode ^
+        id.hashCode ^
+        createdDate.hashCode ^
+        isDone.hashCode ^
+        isDeleted.hashCode ^
+        isFavorite.hashCode;
   }
 }
