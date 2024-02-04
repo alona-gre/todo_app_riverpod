@@ -122,7 +122,7 @@ class _EmailPasswordSignInContentsState
     ref.listen<AsyncValue<void>>(
       emailPasswordSignInControllerProvider(widget.formType)
           .select((state) => state.value),
-      (_, state) => state.showAlertDialogonError(context),
+      (_, state) => state.showAlertDialogOnError(context),
     );
 
     final state =

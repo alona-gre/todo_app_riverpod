@@ -3,10 +3,12 @@ import 'package:riverpod_todo_app/src/common_widgets/responsive_scrollable_colum
 import 'package:riverpod_todo_app/src/common_widgets/responsive_two_column_layout.dart';
 import 'package:riverpod_todo_app/src/constants/app_sizes.dart';
 import 'package:riverpod_todo_app/src/constants/breakpoints.dart';
+import 'package:riverpod_todo_app/src/features/added/presentation/added/added_tasks_screen.dart';
 import 'package:riverpod_todo_app/src/features/app_drawer/presentation/app_drawer.dart';
 import 'package:riverpod_todo_app/src/features/search/presentation/search_screen.dart';
-import 'package:riverpod_todo_app/src/features/tasks/presentation/home_app_bar/home_app_bar.dart';
+import 'package:riverpod_todo_app/src/features/home_app_bar/home_app_bar.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/task_list/all_tasks_list.dart';
+import 'package:riverpod_todo_app/src/features/starred/presentation/starred/starred_screen.dart';
 
 /// Shows the list of products with a search field at the top.
 class TaskListScreen extends StatelessWidget {
@@ -35,6 +37,8 @@ class TaskListScreen extends StatelessWidget {
                         switch (option) {
                       DrawerOption.allTasks => const AllTasksList(),
                       DrawerOption.search => const SearchScreen(),
+                      DrawerOption.starred => const StarredScreen(),
+                      DrawerOption.added => const AddedTasksScreen(),
                     }),
               ],
             )
@@ -57,6 +61,8 @@ class TaskListScreen extends StatelessWidget {
                           switch (option) {
                         DrawerOption.allTasks => const AllTasksList(),
                         DrawerOption.search => const SearchScreen(),
+                        DrawerOption.starred => const StarredScreen(),
+                        DrawerOption.added => const AddedTasksScreen(),
                       }),
                 ],
               ),

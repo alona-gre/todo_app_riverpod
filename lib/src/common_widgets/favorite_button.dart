@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({
+class StarredButton extends StatelessWidget {
+  const StarredButton({
     super.key,
     this.isLoading = false,
     this.onPressed,
-    required this.isFavorite,
+    required this.isStarred,
   });
 
   final bool isLoading;
-  final bool isFavorite;
+  final bool isStarred;
   final VoidCallback? onPressed;
 
   // * Keys for testing using find.byKey()
-  static const addToWishlistButtonKey = Key('addToWishlistButton');
-  static const removeFromWishlistButtonKey = Key('removeFromWishlistButton');
+  static const addToStarredButtonKey = Key('addToStarredButton');
+  static const removeFromStarredButtonKey = Key('removeFromStarredButton');
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,14 @@ class FavoriteButton extends StatelessWidget {
         child: isLoading
             ? const CircularProgressIndicator()
             : IconButton(
-                icon: isFavorite
+                icon: isStarred
                     ? const Icon(
-                        key: removeFromWishlistButtonKey,
-                        Icons.favorite,
+                        key: removeFromStarredButtonKey,
+                        Icons.star,
+                        color: Colors.amber,
                       )
                     : const Icon(
-                        key: addToWishlistButtonKey,
-                        Icons.favorite_border_outlined),
+                        key: addToStarredButtonKey, Icons.star_border_outlined),
                 onPressed: onPressed,
               ));
   }

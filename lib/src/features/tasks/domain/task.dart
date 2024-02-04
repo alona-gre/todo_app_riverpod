@@ -1,9 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+/// * The task identifier is an important concept and can have its own type.
+typedef TaskID = String;
+
 /// Class representing a task.
 class Task {
   final String? title;
   final String? notes;
-  final String id;
+  final TaskID? id;
   final String? createdDate;
   final bool? isDone;
   final bool? isDeleted;
@@ -12,7 +15,7 @@ class Task {
   const Task({
     this.title,
     this.notes,
-    required this.id,
+    this.id,
     this.createdDate,
     this.isDone = false,
     this.isDeleted = false,

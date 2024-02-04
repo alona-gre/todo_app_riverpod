@@ -17,9 +17,9 @@ class TasksList extends StatelessWidget {
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: ListView.builder(
-          itemCount: taskList.length,
+          itemCount: taskList.toList().length,
           itemBuilder: (context, index) => TaskTile(
-            task: taskList[index],
+            task: taskList.toList()[index],
           ),
         ),
       ),

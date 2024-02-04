@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo_app/src/constants/breakpoints.dart';
 import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_repository.dart';
-import 'package:riverpod_todo_app/src/features/tasks/presentation/home_app_bar/more_menu_button.dart';
+import 'package:riverpod_todo_app/src/features/home_app_bar/more_menu_button.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
 /// Custom [AppBar] widget that is reused by the [ProductsListScreen] and

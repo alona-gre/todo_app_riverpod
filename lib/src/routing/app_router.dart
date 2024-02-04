@@ -10,7 +10,7 @@ import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_pass
 import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_state.dart';
 import 'package:riverpod_todo_app/src/features/edit_task/presentation/edit_task_screen.dart';
 import 'package:riverpod_todo_app/src/features/statistics/presentation/statistics_screen.dart';
-import 'package:riverpod_todo_app/src/features/tasks/presentation/task_list_screen.dart';
+import 'package:riverpod_todo_app/src/common_widgets/task_list_screen.dart';
 import 'package:riverpod_todo_app/src/routing/go_router_refresh_stream.dart';
 import 'package:riverpod_todo_app/src/routing/not_found_screen.dart';
 
@@ -18,7 +18,8 @@ enum AppRoute {
   home,
   task,
   search,
-  // starred,
+  starred,
+  added,
   // completed
   // deleted,
   account,
@@ -101,16 +102,30 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               child: StatisticsScreen(),
             ),
           ),
-
-          // GoRoute(
-          //   path: 'starred',
-          //   name: AppRoute.wishlist.name,
-          //   pageBuilder: (context, state) => const MaterialPage(
-          //     fullscreenDialog: true,
-          //     child: WishlistScreen(),
-          //   ),
-          // ),
-
+          GoRoute(
+            path: 'added',
+            name: AppRoute.added.name,
+            builder: (context, state) =>
+                TaskListScreen(option: DrawerOption.added),
+            pageBuilder: (context, state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: TaskListScreen(option: DrawerOption.added),
+            ),
+          ),
+          GoRoute(
+            path: 'starred',
+            name: AppRoute.starred.name,
+            builder: (context, state) =>
+                TaskListScreen(option: DrawerOption.starred),
+            pageBuilder: (context, state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: TaskListScreen(option: DrawerOption.starred),
+            ),
+          ),
           GoRoute(
             path: 'signIn',
             name: AppRoute.signIn.name,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_todo_app/src/common_widgets/alert_dialogs.dart';
 import 'package:riverpod_todo_app/src/features/tasks/domain/task.dart';
+import 'package:riverpod_todo_app/src/features/starred/presentation/add_to_starred/add_to_starred_widget.dart';
 import 'package:riverpod_todo_app/src/routing/app_router.dart';
 
 class TaskTile extends StatelessWidget {
@@ -18,9 +19,9 @@ class TaskTile extends StatelessWidget {
       children: [
         ListTile(
           onTap: () {
-            context.goNamed(
+            context.pushNamed(
               AppRoute.task.name,
-              pathParameters: {'id': task.id},
+              pathParameters: {'id': task.id!},
             );
           },
 
@@ -54,21 +55,7 @@ class TaskTile extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          trailing: task.isFavorite == false
-              ? IconButton(
-                  icon: const Icon(Icons.star_outline),
-                  onPressed: () {
-                    /// TODO
-                    showNotImplementedAlertDialog(context: context);
-                  },
-                )
-              : IconButton(
-                  icon: const Icon(Icons.star),
-                  onPressed: () {
-                    /// TODO
-                    showNotImplementedAlertDialog(context: context);
-                  },
-                ),
+          trailing: AddToStarredWidget(task: task),
         ),
         const Divider(
           height: 0,

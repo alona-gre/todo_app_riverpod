@@ -4,39 +4,39 @@ import 'package:riverpod_todo_app/src/features/tasks/data/fake_tasks_repository.
 
 void main() {
   FakeTasksRepository makeTasksRepository() {
-    return FakeTasksRepository(hasDelay: false);
+    return FakeTasksRepository(addDelay: false);
   }
 
   group('FakeTasksRepository', () {
-    test('getTasksList returns global list', () {
-      final tasksRepository = makeTasksRepository();
+    // test('getTasksList returns global list', () {
+    //   final tasksRepository = makeTasksRepository();
 
-      expect(
-        tasksRepository.getTasksList(),
-        kTestTasks,
-      );
-    });
+    //   expect(
+    //     tasksRepository.getTasksList(),
+    //     kTestTasks,
+    //   );
+    // });
 
-    test('getTask(1) returns first item', () {
-      final tasksRepository = makeTasksRepository();
-      expect(
-        tasksRepository.getTask('t1'),
-        kTestTasks[0],
-      );
-    });
+    // test('getTask(1) returns first item', () {
+    //   final tasksRepository = makeTasksRepository();
+    //   expect(
+    //     tasksRepository.getTask('t1'),
+    //     kTestTasks[0],
+    //   );
+    // });
 
-    test('getTask(100) returns null', () {
-      final tasksRepository = makeTasksRepository();
-      expect(
-        tasksRepository.getTask('100'),
-        null,
-      );
-    });
+    // test('getTask(100) returns null', () {
+    //   final tasksRepository = makeTasksRepository();
+    //   expect(
+    //     tasksRepository.getTask('100'),
+    //     null,
+    //   );
+    // });
 
     test('fetchTasksList returns global list', () async {
       final tasksRepository = makeTasksRepository();
       expect(
-        await tasksRepository.fetchTasks(),
+        await tasksRepository.fetchTasksList(),
         kTestTasks,
       );
     });

@@ -13,9 +13,10 @@ class AllTasksList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tasksListValue = ref.watch(tasksListStreamProvider);
+    // debugPrint(tasksListValue.toString());
     return AsyncValueWidget(
       value: tasksListValue,
-      data: (taskList) => taskList.isEmpty
+      data: (taskList) => taskList.toList().isEmpty
           ? Center(
               child: Text(
                 'Your task list is empty. Add a new task!'.hardcoded,
@@ -29,7 +30,7 @@ class AllTasksList extends ConsumerWidget {
                 Center(
                   child: Chip(
                     label: Text(
-                        '${taskList.length} Completed | ${taskList.length} All'),
+                        '${taskList.toList().length} Completed | ${taskList.toList().length} All'),
                   ),
                 ),
                 TasksList(taskList: taskList)

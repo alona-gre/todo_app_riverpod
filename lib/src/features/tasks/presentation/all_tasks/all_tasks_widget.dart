@@ -4,7 +4,7 @@ import 'package:riverpod_todo_app/src/common_widgets/responsive_two_column_layou
 import 'package:riverpod_todo_app/src/constants/app_sizes.dart';
 import 'package:riverpod_todo_app/src/constants/breakpoints.dart';
 import 'package:riverpod_todo_app/src/features/app_drawer/presentation/app_drawer.dart';
-import 'package:riverpod_todo_app/src/features/tasks/presentation/home_app_bar/home_app_bar.dart';
+import 'package:riverpod_todo_app/src/features/home_app_bar/home_app_bar.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/task_list/all_tasks_list.dart';
 
 /// Shows the list of products with a search field at the top.
