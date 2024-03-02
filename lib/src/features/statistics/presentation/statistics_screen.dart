@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
-/// Shows the list of products with a search field at the top.
+/// Shows statistics for the tasks
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({Key? key}) : super(key: key);
 

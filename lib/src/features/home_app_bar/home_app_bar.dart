@@ -5,12 +5,12 @@ import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_rep
 import 'package:riverpod_todo_app/src/features/home_app_bar/more_menu_button.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
-/// Custom [AppBar] widget that is reused by the [ProductsListScreen] and
-/// [ProductScreen].
+/// Custom [AppBar] widget that is reused by the [AllTasksScreen] and
+/// other tasklist screens.
 /// It shows the following actions, depending on the application state:
-/// - [ShoppingCartIcon]
-/// - Orders button
-/// - Account or Sign-in button
+/// - [Drawer]
+/// - [MoreMenuButton with Account or Sign-in buttons]
+
 class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 

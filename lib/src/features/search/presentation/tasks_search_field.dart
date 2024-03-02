@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
-/// Search field used to filter products by name
+/// Search field used to filter tasks by name
 class TasksSearchTextField extends StatefulWidget {
   const TasksSearchTextField({Key? key}) : super(key: key);
 

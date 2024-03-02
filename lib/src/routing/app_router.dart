@@ -8,7 +8,7 @@ import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_rep
 import 'package:riverpod_todo_app/src/features/authentication/presentation/account/account_screen.dart';
 import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_screen.dart';
 import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_state.dart';
-import 'package:riverpod_todo_app/src/features/edit_task/presentation/edit_task_screen.dart';
+import 'package:riverpod_todo_app/src/features/tasks/presentation/functions/edit_task/edit_task_widget.dart';
 import 'package:riverpod_todo_app/src/features/statistics/presentation/statistics_screen.dart';
 import 'package:riverpod_todo_app/src/common_widgets/task_list_screen.dart';
 import 'package:riverpod_todo_app/src/routing/go_router_refresh_stream.dart';
@@ -19,8 +19,9 @@ enum AppRoute {
   task,
   search,
   starred,
-  added,
-  // completed
+  allTasks,
+  starredTasks,
+  completed,
   // deleted,
   account,
   signIn,
@@ -70,22 +71,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               pageBuilder: (BuildContext context, GoRouterState state) {
                 final taskId = state.pathParameters['id']!;
                 return DialogPage(
-                    builder: (_) => EditTaskScreen(taskId: taskId));
-              }
-              // routes: [
-              //   GoRoute(
-              //     path: 'review',
-              //     name: AppRoute.leaveReview.name,
-              //     pageBuilder: (context, state) {
-              //       final productId = state.pathParameters['id']!;
-              //       return MaterialPage(
-              //         fullscreenDialog: true,
-              //         child: LeaveReviewScreen(productId: productId),
-              //       );
-              //     },
-              //   ),
-              // ],
-              ),
+                    builder: (_) => EditTaskWidget(taskId: taskId));
+              }),
           GoRoute(
             path: 'account',
             name: AppRoute.account.name,
@@ -103,27 +90,39 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             ),
           ),
           GoRoute(
-            path: 'added',
-            name: AppRoute.added.name,
+            path: 'allTasks',
+            name: AppRoute.allTasks.name,
             builder: (context, state) =>
-                TaskListScreen(option: DrawerOption.added),
+                TaskListScreen(option: DrawerOption.allTasks),
             pageBuilder: (context, state) =>
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: TaskListScreen(option: DrawerOption.added),
+              child: TaskListScreen(option: DrawerOption.allTasks),
             ),
           ),
           GoRoute(
-            path: 'starred',
-            name: AppRoute.starred.name,
+            path: 'starredTasks',
+            name: AppRoute.starredTasks.name,
             builder: (context, state) =>
-                TaskListScreen(option: DrawerOption.starred),
+                TaskListScreen(option: DrawerOption.starredTasks),
             pageBuilder: (context, state) =>
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: TaskListScreen(option: DrawerOption.starred),
+              child: TaskListScreen(option: DrawerOption.starredTasks),
+            ),
+          ),
+          GoRoute(
+            path: 'completedTasks',
+            name: AppRoute.completed.name,
+            builder: (context, state) =>
+                TaskListScreen(option: DrawerOption.completed),
+            pageBuilder: (context, state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: TaskListScreen(option: DrawerOption.completed),
             ),
           ),
           GoRoute(

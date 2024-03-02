@@ -30,8 +30,6 @@ class AccountScreen extends ConsumerWidget {
             onPressed: state.isLoading
                 ? null
                 : () async {
-                    // * Get the navigator beforehand to prevent this warning:
-                    // * Don't use 'BuildContext across async gaps'
                     final logout = await showAlertDialog(
                       context: context,
                       title: 'Are you sure?',

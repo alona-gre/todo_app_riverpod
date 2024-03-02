@@ -15,9 +15,16 @@ class MyApp extends ConsumerWidget {
       routerConfig: goRouter,
       onGenerateTitle: (BuildContext context) => 'My To-Do app'.hardcoded,
       theme: ThemeData(
+        useMaterial3: true,
         visualDensity: const VisualDensity(),
-        primarySwatch: Colors.grey,
-        primaryColor: const Color.fromARGB(66, 192, 188, 188),
+
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.green,
+            background: Colors.white,
+            onBackground: const Color.fromARGB(66, 192, 188, 188),
+            error: Colors.red,
+            onTertiary: Colors.orange),
+
         // cardColor is used by ExpansionPanelList
         // cardColor: Color.fromARGB(255, 245, 243, 243),
         appBarTheme: const AppBarTheme(
