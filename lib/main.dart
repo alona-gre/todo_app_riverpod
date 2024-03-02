@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo_app/src/app.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:riverpod_todo_app/src/features/sync_service/sync_service.dart';
 import 'package:riverpod_todo_app/src/features/tasks/data/local/local_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/data/local/sembast_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
@@ -17,12 +18,18 @@ void main() async {
   registerErrorHandlers();
 
   final localTasksRepository = await SembastTasksRepository.makeDefault();
+  // * Create ProviderContainer with any required overrides
+  final container = ProviderContainer(
+    overrides: [
+      localTasksRepositoryProvider.overrideWithValue(localTasksRepository),
+    ],
+  );
+  // * Initialize TasksSyncService to star the listener
+  container.read(syncServiceProvider);
   // * Entry point of the app
   runApp(
-    ProviderScope(
-      overrides: [
-        localTasksRepositoryProvider.overrideWithValue(localTasksRepository),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: const MyApp(),
     ),
   );

@@ -157,14 +157,15 @@ class Robot {
   }
 
   /// TODO: test swipe to delete
-  Future<void> swipeToDelete() async {
-    // final widgetSize = tester.getSize(find.byKey(TaskTile.taskTileKey)).width;
+  // Future<void> swipeToDelete() async {
+  //   final widgetSize =
+  //       tester.getSize(find.byKey(TaskTile.taskTileKey)).width / 3;
 
-    // await tester.drag(
-    //   find.byKey(TaskTile.taskTileKey),
-    //   Offset(-widgetSize, 0),
-    // );
+  //   await tester.drag(
+  //     find.byKey(TaskTile.taskTileKey),
+  //     Offset(-widgetSize, 0),
+  //   );
 
-    await tester.pumpAndSettle();
-  }
+  //   await tester.pumpAndSettle();
+  // }
 }

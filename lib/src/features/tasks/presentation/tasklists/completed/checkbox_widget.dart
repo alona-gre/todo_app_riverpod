@@ -17,7 +17,7 @@ class CheckboxWidget extends StatelessWidget {
       builder: (context, ref, _) {
         final state = ref.watch(completeControllerProvider);
         // debugPrint(state.toString());
-        var isCompleted = ref.watch(isCompletedProvider(task.id!));
+        var isCompleted = ref.read(isCompletedProvider(task.id!));
 
         return SizedBox(
           child: state.isLoading

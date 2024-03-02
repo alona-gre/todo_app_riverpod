@@ -147,14 +147,20 @@ final completedTasksServiceStreamProvider = StreamProvider((ref) {
 
 final isStarredProvider = Provider.family<bool, String>((ref, taskId) {
   final tasks = ref.watch(tasksServiceStreamProvider).value;
-  final task = tasks!.firstWhere((tsk) => tsk.id == taskId);
+  final task = tasks!.firstWhere(
+    (tsk) => tsk.id == taskId,
+    // orElse: () => const Task(),
+  );
   final isStarred = task.isStarred;
   return isStarred ?? false;
 });
 
 final isCompletedProvider = Provider.family<bool, String>((ref, taskId) {
   final tasks = ref.watch(tasksServiceStreamProvider).value;
-  final task = tasks!.firstWhere((tsk) => tsk.id == taskId);
+  final task = tasks!.firstWhere(
+    (tsk) => tsk.id == taskId,
+    // orElse: () => const Task(),
+  );
   final isCompleted = task.isCompleted;
   return isCompleted ?? false;
 });

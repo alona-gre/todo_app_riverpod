@@ -104,12 +104,11 @@ class _EditTaskScreenState extends ConsumerState<EditTaskWidget> {
                               text: 'Save'.hardcoded,
                               isLoading: state.isLoading,
                               onPressed: () {
-                                final Task updatedTask = Task(
+                                final Task updatedTask = task.copyWith(
                                   id: task.id,
                                   title: titleController.text,
                                   notes: notesController.text,
                                 );
-
                                 ref
                                     .read(editTaskControllerProvider.notifier)
                                     .updateTask(updatedTask);

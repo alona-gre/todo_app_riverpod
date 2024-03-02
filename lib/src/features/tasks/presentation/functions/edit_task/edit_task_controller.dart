@@ -12,13 +12,7 @@ class EditTaskController extends StateNotifier<AsyncValue<void>> {
   Future<void> updateTask(Task task) async {
     state = const AsyncLoading<void>();
 
-    final updatedTask = Task(
-      id: task.id,
-      title: task.title,
-      notes: task.notes,
-      isStarred: task.isStarred,
-      isCompleted: task.isCompleted,
-    );
+    final updatedTask = task.copyWith(title: task.title, notes: task.notes);
 
     final value = await AsyncValue.guard(
       () => tasksService.updateTask(updatedTask),
