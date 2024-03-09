@@ -12,7 +12,7 @@ class AllTasksScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tasksListValue = ref.watch(tasksServiceStreamProvider);
+    final tasksListValue = ref.watch(tasksProvider);
     // debugPrint(tasksListValue.toString());
     return AsyncValueWidget(
       value: tasksListValue,

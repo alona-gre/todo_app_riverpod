@@ -54,6 +54,25 @@ void main() {
 
       await r.openDrawer();
       await r.openAllTasks();
+      r.expectFindNTaskTiles(1);
+
+      // TODO: log in and verify the tasks are synced
+      // await r.openPopupMenu();
+      // await r.auth.openEmailPasswordSignInScreen();
+      // await r.auth.signInWithEmailAndPassword();
+
+      // await tester.runAsync(() async {
+      //   r.expectFindNTaskTiles(1);
+      // });
+
+      // await r.openPopupMenu();
+      // await r.auth.openAccountScreen();
+      // await r.auth.tapLogoutButton();
+      // await r.auth.tapDialogLogoutButton();
+
+      // await tester.runAsync(() async {
+      //   r.expectFindNTaskTiles(1);
+      // });
 
       /// TODO swipe to delete a task
       // await r.swipeToDelete();

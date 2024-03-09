@@ -24,7 +24,7 @@ void main() async {
       localTasksRepositoryProvider.overrideWithValue(localTasksRepository),
     ],
   );
-  // * Initialize TasksSyncService to star the listener
+  // * Initialize SyncService to star the listener
   container.read(syncServiceProvider);
   // * Entry point of the app
   runApp(

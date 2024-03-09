@@ -16,14 +16,20 @@ abstract class LocalTasksRepository {
 
   Future deleteTask(String taskId);
 
-  Stream<List<Task>> watchAllTasksStream();
+  Stream<List<Task>> watchTasks();
 
-  Stream<List<Task>> watchStarredTasksStream();
+  Future<List<Task>> fetchTasks();
 
-  Stream<List<Task>> watchCompletedTasksStream();
+  Stream<List<Task>> watchStarred();
+
+  Stream<List<Task>> watchCompleted();
+
+  Future<void> setTasks(
+    List<Task> updatedCart,
+  );
 }
 
-final localTasksRepositoryProvider = Provider.autoDispose<LocalTasksRepository>(
+final localTasksRepositoryProvider = Provider<LocalTasksRepository>(
   (ref) {
     // * Override this in the main method
     throw UnimplementedError();

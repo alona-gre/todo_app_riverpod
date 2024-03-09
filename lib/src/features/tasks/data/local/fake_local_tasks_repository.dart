@@ -110,13 +110,18 @@ class FakeLocalTasksRepository implements LocalTasksRepository {
   }
 
   @override
-  Stream<List<Task>> watchAllTasksStream() {
+  Future<List<Task>> fetchTasks() async {
+    return _tasks.value;
+  }
+
+  @override
+  Stream<List<Task>> watchTasks() {
     return _tasks.stream;
   }
 
   @override
-  Stream<List<Task>> watchCompletedTasksStream() {
-    final completedTasks = watchAllTasksStream().map((tasks) => tasks
+  Stream<List<Task>> watchCompleted() {
+    final completedTasks = watchTasks().map((tasks) => tasks
         .where(
           (tsk) => tsk.isCompleted!,
         )
@@ -126,8 +131,8 @@ class FakeLocalTasksRepository implements LocalTasksRepository {
   }
 
   @override
-  Stream<List<Task>> watchStarredTasksStream() {
-    final starredTasks = watchAllTasksStream().map((tasks) => tasks
+  Stream<List<Task>> watchStarred() {
+    final starredTasks = watchTasks().map((tasks) => tasks
         .where(
           (tsk) => tsk.isStarred!,
         )
@@ -137,4 +142,10 @@ class FakeLocalTasksRepository implements LocalTasksRepository {
   }
 
   void dispose() => _tasks.close();
+
+  @override
+  Future<void> setTasks(List<Task> updatedTasks) async {
+    await delay(addDelay);
+    _tasks.value = updatedTasks;
+  }
 }

@@ -10,12 +10,12 @@ void main() {
     // * Note: All tests are wrapped with `runAsync` to prevent this error:
     // * A Timer is still pending even after the widget tree was disposed.
     testWidgets('Empty starred tasklist', (tester) async {
+      final r = Robot(tester);
+      await r.pumpMyApp();
+      r.expectFindNTaskTiles(0);
+      await r.openDrawer();
+      await r.starredTasks.openStarred();
       await tester.runAsync(() async {
-        final r = Robot(tester);
-        await r.pumpMyApp();
-        r.expectFindNTaskTiles(0);
-        await r.openDrawer();
-        await r.starredTasks.openStarred();
         r.starredTasks.expectStarredIsEmpty();
       });
     });

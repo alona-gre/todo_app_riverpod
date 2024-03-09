@@ -85,41 +85,38 @@ class TasksService {
     }
   }
 
-  Stream<List<Task>> watchAllTasksStream() {
+  Stream<List<Task>> watchTasks() {
     final user = ref.read(authRepositoryProvider).currentUser;
+    //final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref
-          .read(remoteTasksRepositoryProvider)
-          .watchAllTasksStream(user.uid);
+      return ref.watch(remoteTasksRepositoryProvider).watchTasks(user.uid);
     } else {
-      return ref.read(localTasksRepositoryProvider).watchAllTasksStream();
+      return ref.watch(localTasksRepositoryProvider).watchTasks();
     }
   }
 
-  Stream<List<Task>> watchStarredTasksStream() {
-    final user = ref.read(authRepositoryProvider).currentUser;
+  Stream<List<Task>> watchStarred() {
+    //final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref
-          .read(remoteTasksRepositoryProvider)
-          .watchStarredTasksStream(user.uid);
+      return ref.watch(remoteTasksRepositoryProvider).watchStarred(user.uid);
     } else {
-      return ref.read(localTasksRepositoryProvider).watchStarredTasksStream();
+      return ref.watch(localTasksRepositoryProvider).watchStarred();
     }
   }
 
-  Stream<List<Task>> watchCompletedTasksStream() {
-    final user = ref.read(authRepositoryProvider).currentUser;
+  Stream<List<Task>> watchCompleted() {
+    //final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref
-          .read(remoteTasksRepositoryProvider)
-          .watchCompletedTasksStream(user.uid);
+      return ref.watch(remoteTasksRepositoryProvider).watchCompleted(user.uid);
     } else {
-      return ref.read(localTasksRepositoryProvider).watchCompletedTasksStream();
+      return ref.watch(localTasksRepositoryProvider).watchCompleted();
     }
   }
 
   Stream<Task?> watchTask(String taskId) {
-    return watchAllTasksStream().map((tasks) => _getTask(tasks, taskId));
+    return watchTasks().map((tasks) => _getTask(tasks, taskId));
   }
 }
 
@@ -129,24 +126,22 @@ final tasksServiceProvider = Provider<TasksService>(
   },
 );
 
-final tasksServiceStreamProvider = StreamProvider(
-  (ref) => ref.watch(tasksServiceProvider).watchAllTasksStream(),
+final tasksProvider = StreamProvider<List<Task>>(
+  (ref) => ref.watch(tasksServiceProvider).watchTasks(),
 );
 
-final starredTasksServiceStreamProvider = StreamProvider((ref) {
-  final starredTasks =
-      ref.watch(tasksServiceProvider).watchStarredTasksStream();
+final starredProvider = StreamProvider((ref) {
+  final starredTasks = ref.watch(tasksServiceProvider).watchStarred();
   return starredTasks;
 });
 
-final completedTasksServiceStreamProvider = StreamProvider((ref) {
-  final completedTasks =
-      ref.watch(tasksServiceProvider).watchCompletedTasksStream();
+final completedProvider = StreamProvider((ref) {
+  final completedTasks = ref.watch(tasksServiceProvider).watchCompleted();
   return completedTasks;
 });
 
 final isStarredProvider = Provider.family<bool, String>((ref, taskId) {
-  final tasks = ref.watch(tasksServiceStreamProvider).value;
+  final tasks = ref.watch(tasksProvider).value;
   final task = tasks!.firstWhere(
     (tsk) => tsk.id == taskId,
     // orElse: () => const Task(),
@@ -156,7 +151,7 @@ final isStarredProvider = Provider.family<bool, String>((ref, taskId) {
 });
 
 final isCompletedProvider = Provider.family<bool, String>((ref, taskId) {
-  final tasks = ref.watch(tasksServiceStreamProvider).value;
+  final tasks = ref.watch(tasksProvider).value;
   final task = tasks!.firstWhere(
     (tsk) => tsk.id == taskId,
     // orElse: () => const Task(),

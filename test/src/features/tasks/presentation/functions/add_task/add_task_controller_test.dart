@@ -33,7 +33,7 @@ void main() {
       verify(() => tasksService.insertTask(testTask)).called(1);
       expect(
         controller.state,
-        const AsyncData<dynamic>(null),
+        const AsyncData<void>(null),
       );
     });
 

@@ -10,8 +10,8 @@ class StarredTasksScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allTasks = ref.watch(tasksServiceStreamProvider);
-    final starredTasks = ref.watch(starredTasksServiceStreamProvider);
+    final allTasks = ref.watch(tasksProvider);
+    final starredTasks = ref.watch(starredProvider);
 
     return Column(
         mainAxisSize: MainAxisSize.min,

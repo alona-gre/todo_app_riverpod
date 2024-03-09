@@ -24,12 +24,13 @@ class CheckboxWidget extends StatelessWidget {
               ? const CircularProgressIndicator()
               : Checkbox(
                   value: isCompleted,
-                  onChanged: (_) {
+                  onChanged: (_) async {
                     if (!isCompleted && !state.isLoading) {
-                      ref.read(completeControllerProvider.notifier).complete(
+                      await ref
+                          .read(completeControllerProvider.notifier)
+                          .complete(
                             task.copyWith(isCompleted: true),
                           );
-
                       !state.hasError && !state.isLoading
                           ? showSnackBar(context, 'Added to Completed list')
                           : null;
@@ -38,6 +39,7 @@ class CheckboxWidget extends StatelessWidget {
                       ref.read(completeControllerProvider.notifier).uncomplete(
                             task.copyWith(isCompleted: false),
                           );
+                      ref.watch(isCompletedProvider(task.id!));
 
                       !state.hasError && !state.isLoading
                           ? showSnackBar(context, 'Removed from Completed list')

@@ -25,8 +25,6 @@ class SembastTasksRepository implements LocalTasksRepository {
     return SembastTasksRepository(await createDatabase('tasks.db'));
   }
 
-  static const tasksKey = 'tasks';
-
   @override
   Future<String> insertTask(Task task) => store.add(db, task.toJson());
 
@@ -54,27 +52,52 @@ class SembastTasksRepository implements LocalTasksRepository {
   Future deleteTask(String taskId) => store.record(taskId).delete(db);
 
   @override
-  Stream<List<Task>> watchAllTasksStream() => store.query().onSnapshots(db).map(
+  Future<List<Task>> fetchTasks() async {
+    final snapshot = await store.find(db);
+    return snapshot
+        .map(
+          (task) => Task.fromJson(task.value).copyWith(id: task.key),
+        )
+        .toList(growable: false);
+  }
+
+  @override
+  Stream<List<Task>> watchTasks() => store.query().onSnapshots(db).map(
         (snapshot) => snapshot
             .map((task) => Task.fromJson(task.value).copyWith(id: task.key))
             .toList(growable: false),
       );
 
   @override
-  Stream<List<Task>> watchStarredTasksStream() =>
-      store.query().onSnapshots(db).map(
-            (snapshot) => snapshot
-                .map((task) => Task.fromJson(task.value).copyWith(id: task.key))
-                .where((tsk) => tsk.isStarred == true)
-                .toList(growable: false),
-          );
+  Stream<List<Task>> watchStarred() => store.query().onSnapshots(db).map(
+        (snapshot) => snapshot
+            .map((task) => Task.fromJson(task.value).copyWith(id: task.key))
+            .where((tsk) => tsk.isStarred == true)
+            .toList(growable: false),
+      );
 
   @override
-  Stream<List<Task>> watchCompletedTasksStream() =>
-      store.query().onSnapshots(db).map(
-            (snapshot) => snapshot
-                .map((task) => Task.fromJson(task.value).copyWith(id: task.key))
-                .where((tsk) => tsk.isCompleted == true)
-                .toList(growable: false),
-          );
+  Stream<List<Task>> watchCompleted() => store.query().onSnapshots(db).map(
+        (snapshot) => snapshot
+            .map((task) => Task.fromJson(task.value).copyWith(id: task.key))
+            .where((tsk) => tsk.isCompleted == true)
+            .toList(growable: false),
+      );
+
+  @override
+  Future<void> setTasks(List<Task> updatedTasks) async {
+    try {
+      // if (updatedTasks.isEmpty) {
+      //   // clears all records in the store
+      //   await store.delete(db);
+      // } else {
+      for (final task in updatedTasks) {
+        await store.record(task.id!).put(db, task.toJson());
+      }
+      // }
+    } catch (error) {
+      // TODO: Handle potential errors during database operations:
+      throw Exception('Error setting tasks: $error');
+    }
+  }
 }

@@ -16,7 +16,7 @@ class StarWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(addToStarredControllerProvider);
     // debugPrint(state.toString());
-    final isStarred = ref.watch(isStarredProvider(task.id!));
+    final isStarred = ref.read(isStarredProvider(task.id!));
 
     return StarredButton(
       isLoading: state.isLoading,
@@ -26,6 +26,7 @@ class StarWidget extends ConsumerWidget {
               ref.read(addToStarredControllerProvider.notifier).addToStarred(
                     task.copyWith(isStarred: true),
                   );
+
               !state.hasError && !state.isLoading
                   ? showSnackBar(context, 'Added to Starred')
                   : null;

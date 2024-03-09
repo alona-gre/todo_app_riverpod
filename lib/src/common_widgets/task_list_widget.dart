@@ -26,20 +26,21 @@ class TaskListWidget extends ConsumerWidget {
 
           key: ValueKey('${tasks[index].id} '),
           confirmDismiss: (direction) async {
-            if (direction == DismissDirection.endToStart) {
-              await ref
-                  .read(deleteTaskControllerProvider.notifier)
-                  .deleteTask(tasks[index].id!)
-                  .then(
-                    (value) => showSnackBar(
-                        context, '${tasks[index].title} has been deleted'),
-                  );
-              return true;
-            } else {
+            if (direction == DismissDirection.startToEnd) {
               showNotImplementedAlertDialog(context: context);
               return false;
 
               /// TODO: add calendar action
+            } else {
+              // saves the task title so the snackbar can use it after the task deletion
+              final title = tasks[index].title;
+              await ref
+                  .read(deleteTaskControllerProvider.notifier)
+                  .deleteTask(tasks[index].id!)
+                  .then(
+                    (value) => showSnackBar(context, '$title has been deleted'),
+                  );
+              return true;
             }
           },
 

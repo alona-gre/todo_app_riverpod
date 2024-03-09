@@ -10,8 +10,8 @@ class CompletedTasksScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final completedTasks = ref.watch(completedTasksServiceStreamProvider);
-    final allTasks = ref.watch(tasksServiceStreamProvider);
+    final completedTasks = ref.watch(completedProvider);
+    final allTasks = ref.watch(tasksProvider);
 
     return Column(
         mainAxisSize: MainAxisSize.min,

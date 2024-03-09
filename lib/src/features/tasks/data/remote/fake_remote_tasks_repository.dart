@@ -19,14 +19,20 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
       getTasksByUserId(userId).firstWhere((tsk) => tsk.id == taskId);
 
   @override
-  Future insertTask(String uid, Task task) async {
-    await delay(addDelay);
-    final allTasks = _tasks.value[uid] ?? [];
+  Future<void> insertTask(String uid, Task task) async {
+    // Get current data from the store
+    final currentData = _tasks.value;
 
-    allTasks.add(task);
-    final updatedTasks = allTasks;
+    // Create a new list for the user if it doesn't exist
+    if (currentData[uid] == null) {
+      currentData[uid] = [];
+    }
 
-    _tasks.value[uid] = updatedTasks;
+    // Add the task to the user's task list
+    currentData[uid]!.add(task);
+
+    // Update the store with the modified data
+    _tasks.value = currentData;
   }
 
   @override
@@ -41,90 +47,105 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
   }
 
   @override
-  Future completeTask(String uid, Task task) async {
+  Future<void> completeTask(String uid, Task task) async {
     await delay(addDelay);
-    final allTasks = _tasks.value[uid] ?? [];
-    final completedTask = allTasks
-        .firstWhere((tsk) => tsk.id == task.id)
-        .copyWith(isCompleted: true);
-    final taskIndex = allTasks.indexWhere((tsk) => tsk.id == task.id);
-    allTasks.removeAt(taskIndex);
-    allTasks.insert(taskIndex, completedTask);
-    final updatedAllTasks = allTasks;
+    // Get current data from the store
+    final currentData = _tasks.value;
+    final userData = currentData[uid] ?? [];
 
-    _tasks.value[uid] = updatedAllTasks;
+    for (int i = 0; i < userData.length; i++) {
+      if (userData[i].id == task.id) {
+        userData[i] = userData[i].copyWith(isCompleted: true);
+        break;
+      }
+    }
+
+    _tasks.value = currentData;
   }
 
   @override
   Future uncompleteTask(String uid, Task task) async {
     await delay(addDelay);
-    final allTasks = _tasks.value[uid];
-    final completedTask = allTasks!
-        .firstWhere((tsk) => tsk.id == task.id)
-        .copyWith(isCompleted: false);
-    final taskIndex = allTasks.indexWhere((tsk) => tsk.id == task.id);
-    allTasks.removeAt(taskIndex);
-    allTasks.insert(taskIndex, completedTask);
-    final updatedTasks = allTasks;
+    // Get current data from the store
+    final currentData = _tasks.value;
+    final userData = currentData[uid] ?? [];
 
-    _tasks.value[uid] = updatedTasks;
+    for (int i = 0; i < userData.length; i++) {
+      if (userData[i].id == task.id) {
+        userData[i] = userData[i].copyWith(isCompleted: false);
+        break;
+      }
+    }
+
+    _tasks.value = currentData;
   }
 
   @override
   Future starTask(String uid, Task task) async {
     await delay(addDelay);
-    final allTasks = _tasks.value[uid];
-    final starredTask = allTasks!
-        .firstWhere((tsk) => tsk.id == task.id)
-        .copyWith(isStarred: true);
-    final taskIndex = allTasks.indexWhere((tsk) => tsk.id == task.id);
-    allTasks.removeAt(taskIndex);
-    allTasks.insert(taskIndex, starredTask);
-    final updatedTasks = allTasks;
+    // Get current data from the store
+    final currentData = _tasks.value;
+    final userData = currentData[uid] ?? [];
 
-    _tasks.value[uid] = updatedTasks;
+    for (int i = 0; i < userData.length; i++) {
+      if (userData[i].id == task.id) {
+        userData[i] = userData[i].copyWith(isStarred: true);
+        break;
+      }
+    }
+
+    _tasks.value = currentData;
   }
 
   @override
   Future removeStarFromTask(String uid, Task task) async {
     await delay(addDelay);
-    final allTasks = _tasks.value[uid];
-    final starredTask = allTasks!
-        .firstWhere(
-          (tsk) => tsk.id == task.id,
-        )
-        .copyWith(isStarred: false);
+    // Get current data from the store
+    final currentData = _tasks.value;
+    final userData = currentData[uid] ?? [];
 
-    final taskIndex = allTasks.indexWhere((tsk) => tsk.id == task.id);
-    allTasks.removeAt(taskIndex);
-    allTasks.insert(taskIndex, starredTask);
-    final updatedTasks = allTasks;
+    for (int i = 0; i < userData.length; i++) {
+      if (userData[i].id == task.id) {
+        userData[i] = userData[i].copyWith(isStarred: false);
+        break;
+      }
+    }
 
-    _tasks.value[uid] = updatedTasks;
+    _tasks.value = currentData;
   }
 
   @override
   Future updateTask(String uid, Task task) async {
     await delay(addDelay);
-    final allTasks = _tasks.value[uid];
-    final taskIndex = allTasks!.indexWhere((tsk) => tsk.id == task.id);
-    allTasks.removeAt(taskIndex);
-    allTasks.insert(taskIndex, task);
-    final updatedTasks = allTasks;
+    // Get current data from the store
+    final currentData = _tasks.value;
+    final userData = currentData[uid] ?? [];
 
-    _tasks.value[uid] = updatedTasks;
+    for (int i = 0; i < userData.length; i++) {
+      if (userData[i].id == task.id) {
+        userData[i] = task;
+        break;
+      }
+    }
   }
 
   @override
-  Stream<List<Task>> watchAllTasksStream(
+  Future<List<Task>> fetchTasks(
     String uid,
   ) =>
-      _tasks.stream.map(
-        (tasksData) => tasksData[uid] ?? const [],
-      );
+      Future.value(_tasks.value[uid] ?? const []);
 
   @override
-  Stream<List<Task>> watchCompletedTasksStream(String uid) {
+  Stream<List<Task>> watchTasks(
+    String uid,
+  ) {
+    return _tasks.stream.map(
+      (tasksData) => tasksData[uid] ?? const [],
+    );
+  }
+
+  @override
+  Stream<List<Task>> watchCompleted(String uid) {
     final userTasks = _tasks.stream.map(
       (tasksData) => tasksData[uid] ?? const [],
     );
@@ -140,7 +161,7 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
   }
 
   @override
-  Stream<List<Task>> watchStarredTasksStream(
+  Stream<List<Task>> watchStarred(
     String uid,
   ) {
     final userTasks = _tasks.stream.map(
@@ -158,4 +179,15 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
   }
 
   void dispose() => _tasks.close();
+
+  @override
+  Future<void> setTasks(String uid, List<Task> updatedRemoteTasks) async {
+    await delay(addDelay);
+    // First, get the current tasks data for all users
+    final tasks = _tasks.value;
+    // Then, set the tasks for the given uid
+    tasks[uid] = updatedRemoteTasks;
+    // Finally, update the tasks data (will emit a new value)
+    _tasks.value = tasks;
+  }
 }

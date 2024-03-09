@@ -109,6 +109,13 @@ class AuthRobot {
     );
   }
 
+  Future<void> tapSignInButton() async {
+    final signInButton = find.text('Sign In');
+    expect(signInButton, findsOneWidget);
+    await tester.tap(signInButton);
+    await tester.pump();
+  }
+
   Future<void> tapLogoutButton() async {
     final logoutButton = find.text('Logout');
     expect(logoutButton, findsOneWidget);

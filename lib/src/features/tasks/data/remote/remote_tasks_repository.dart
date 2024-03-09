@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_todo_app/src/features/tasks/data/remote/fake_remote_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/domain/task.dart';
 
 abstract class RemoteTasksRepository {
@@ -16,23 +17,31 @@ abstract class RemoteTasksRepository {
 
   Future updateTask(String uid, Task task);
 
-  Stream<List<Task>> watchAllTasksStream(
+  Future<List<Task>> fetchTasks(
     String uid,
   );
 
-  Stream<List<Task>> watchStarredTasksStream(
+  Stream<List<Task>> watchTasks(
     String uid,
   );
 
-  Stream<List<Task>> watchCompletedTasksStream(
+  Stream<List<Task>> watchStarred(
     String uid,
+  );
+
+  Stream<List<Task>> watchCompleted(
+    String uid,
+  );
+
+  Future<void> setTasks(
+    String uid,
+    List<Task> updatedRemoteTasks,
   );
 }
 
-final remoteTasksRepositoryProvider =
-    Provider.autoDispose<RemoteTasksRepository>(
+final remoteTasksRepositoryProvider = Provider<RemoteTasksRepository>(
   (ref) {
-    // * Override this in the main method
-    throw UnimplementedError();
+    // TODO: replace with "real" remote cart repository
+    return FakeRemoteTasksRepository(addDelay: false);
   },
 );
