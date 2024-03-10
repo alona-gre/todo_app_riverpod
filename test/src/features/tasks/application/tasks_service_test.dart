@@ -7,7 +7,6 @@ import 'package:riverpod_todo_app/src/features/tasks/application/tasks_service.d
 import 'package:riverpod_todo_app/src/features/tasks/data/local/local_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/data/remote/remote_tasks_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/domain/task.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../../mocks.dart';
 

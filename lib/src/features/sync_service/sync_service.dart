@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_todo_app/src/exceptions/error_logger.dart';
 import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:riverpod_todo_app/src/features/authentication/domain/app_user.dart';
 import 'package:riverpod_todo_app/src/features/tasks/data/local/local_tasks_repository.dart';
@@ -42,9 +43,8 @@ class SyncService {
         // Remove all items from the local repository
         await localTasksRepository.setTasks(const []);
       }
-    } catch (e, _) {
-      throw e.toString();
-      // ref.read(errorLoggerProvider).logError(e, st);
+    } catch (e, st) {
+      ref.read(errorLoggerProvider).logError(e, st);
     }
   }
 

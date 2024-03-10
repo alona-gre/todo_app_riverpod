@@ -96,7 +96,6 @@ class SembastTasksRepository implements LocalTasksRepository {
       }
       // }
     } catch (error) {
-      // TODO: Handle potential errors during database operations:
       throw Exception('Error setting tasks: $error');
     }
   }
