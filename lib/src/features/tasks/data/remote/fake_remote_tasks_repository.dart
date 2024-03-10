@@ -127,6 +127,7 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
         break;
       }
     }
+    _tasks.value = currentData;
   }
 
   @override

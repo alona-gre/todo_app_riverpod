@@ -18,7 +18,6 @@ void main() {
       // verify the task is added
       r.expectFindNTaskTiles(1);
 
-      // edit a task by adding notes
       await r.selectTask();
       await r.editTaskNotes(testNotes);
       await r.tapEditTaskButton();
@@ -56,19 +55,21 @@ void main() {
       await r.openAllTasks();
       r.expectFindNTaskTiles(1);
 
-      // TODO: log in and verify the tasks are synced
-      // await r.openPopupMenu();
-      // await r.auth.openEmailPasswordSignInScreen();
-      // await r.auth.signInWithEmailAndPassword();
+      // log in
+      await r.openPopupMenu();
+      await r.auth.openEmailPasswordSignInScreen();
+      await r.auth.signInWithEmailAndPassword();
 
+      // TODO: verify the tasks are synced after login
       // await tester.runAsync(() async {
       //   r.expectFindNTaskTiles(1);
       // });
 
-      // await r.openPopupMenu();
-      // await r.auth.openAccountScreen();
-      // await r.auth.tapLogoutButton();
-      // await r.auth.tapDialogLogoutButton();
+      // log out
+      await r.openPopupMenu();
+      await r.auth.openAccountScreen();
+      await r.auth.tapLogoutButton();
+      await r.auth.tapDialogLogoutButton();
 
       // await tester.runAsync(() async {
       //   r.expectFindNTaskTiles(1);
@@ -76,7 +77,7 @@ void main() {
 
       /// TODO swipe to delete a task
       // await r.swipeToDelete();
-      // r.expectFindNTaskTiles(0);
+      // r.expectFindNTaskTiles(1);
     });
   });
 }

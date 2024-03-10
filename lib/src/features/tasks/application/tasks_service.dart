@@ -9,7 +9,8 @@ class TasksService {
   TasksService(this.ref);
 
   Future insertTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       return ref.read(remoteTasksRepositoryProvider).insertTask(user.uid, task);
     } else {
@@ -18,7 +19,8 @@ class TasksService {
   }
 
   Future<void> starTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref.read(remoteTasksRepositoryProvider).starTask(user.uid, task);
     } else {
@@ -27,7 +29,8 @@ class TasksService {
   }
 
   Future<void> removeStarFromTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref
           .read(remoteTasksRepositoryProvider)
@@ -38,7 +41,8 @@ class TasksService {
   }
 
   Future<void> completeTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref
           .read(remoteTasksRepositoryProvider)
@@ -49,7 +53,8 @@ class TasksService {
   }
 
   Future<void> uncompleteTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref
           .read(remoteTasksRepositoryProvider)
@@ -60,7 +65,8 @@ class TasksService {
   }
 
   Future<void> updateTask(Task task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref.read(remoteTasksRepositoryProvider).updateTask(user.uid, task);
     } else {
@@ -69,7 +75,8 @@ class TasksService {
   }
 
   Future<void> deleteTask(String task) async {
-    final user = ref.read(authRepositoryProvider).currentUser;
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
       await ref.read(remoteTasksRepositoryProvider).deleteTask(user.uid, task);
     } else {
@@ -86,12 +93,12 @@ class TasksService {
   }
 
   Stream<List<Task>> watchTasks() {
-    final user = ref.read(authRepositoryProvider).currentUser;
-    //final user = ref.watch(authStateChangesProvider).value;
+    //final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref.watch(remoteTasksRepositoryProvider).watchTasks(user.uid);
+      return ref.read(remoteTasksRepositoryProvider).watchTasks(user.uid);
     } else {
-      return ref.watch(localTasksRepositoryProvider).watchTasks();
+      return ref.read(localTasksRepositoryProvider).watchTasks();
     }
   }
 
@@ -99,19 +106,19 @@ class TasksService {
     //final user = ref.read(authRepositoryProvider).currentUser;
     final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref.watch(remoteTasksRepositoryProvider).watchStarred(user.uid);
+      return ref.read(remoteTasksRepositoryProvider).watchStarred(user.uid);
     } else {
-      return ref.watch(localTasksRepositoryProvider).watchStarred();
+      return ref.read(localTasksRepositoryProvider).watchStarred();
     }
   }
 
-  Stream<List<Task>> watchCompleted() {
+  Stream<List<Task>> watchCompletedTasksStream() {
     //final user = ref.read(authRepositoryProvider).currentUser;
     final user = ref.watch(authStateChangesProvider).value;
     if (user != null) {
-      return ref.watch(remoteTasksRepositoryProvider).watchCompleted(user.uid);
+      return ref.read(remoteTasksRepositoryProvider).watchCompleted(user.uid);
     } else {
-      return ref.watch(localTasksRepositoryProvider).watchCompleted();
+      return ref.read(localTasksRepositoryProvider).watchCompleted();
     }
   }
 
@@ -126,7 +133,7 @@ final tasksServiceProvider = Provider<TasksService>(
   },
 );
 
-final tasksProvider = StreamProvider<List<Task>>(
+final tasksProvider = StreamProvider(
   (ref) => ref.watch(tasksServiceProvider).watchTasks(),
 );
 
@@ -136,7 +143,8 @@ final starredProvider = StreamProvider((ref) {
 });
 
 final completedProvider = StreamProvider((ref) {
-  final completedTasks = ref.watch(tasksServiceProvider).watchCompleted();
+  final completedTasks =
+      ref.watch(tasksServiceProvider).watchCompletedTasksStream();
   return completedTasks;
 });
 
