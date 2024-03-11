@@ -27,6 +27,8 @@ abstract class LocalTasksRepository {
   Future<void> setTasks(
     List<Task> updatedCart,
   );
+
+  Stream<List<Task>> searchTasks(String query);
 }
 
 final localTasksRepositoryProvider = Provider<LocalTasksRepository>(

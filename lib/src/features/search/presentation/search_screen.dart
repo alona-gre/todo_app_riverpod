@@ -1,64 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_todo_app/src/common_widgets/async_value_widget.dart';
+import 'package:riverpod_todo_app/src/common_widgets/task_list_widget.dart';
+import 'package:riverpod_todo_app/src/features/tasks/presentation/tasklists/all_tasks/tasks_search_state_provider.dart';
+import 'package:riverpod_todo_app/src/localization/string_hardcoded.dart';
 
-/// Shows the list of products with a search field at the top.
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends ConsumerWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchedTasks = ref.watch(tasksSearchResultsProvider);
 
-class _SearchScreenState extends State<SearchScreen> {
-  // * Use a [ScrollController] to register a listener that dismisses the
-  // * on-screen keyboard when the user scrolls.
-  // * This is needed because this page has a search field that the user can
-  // * type into.
-  final _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_dismissOnScreenKeyboard);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_dismissOnScreenKeyboard);
-    super.dispose();
-  }
-
-  // When the search text field gets the focus, the keyboard appears on mobile.
-  // This method is used to dismiss the keyboard when the user scrolls.
-  void _dismissOnScreenKeyboard() {
-    if (FocusScope.of(context).hasFocus) {
-      FocusScope.of(context).unfocus();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Center(
-          child: Text('Search tasks'),
-        ),
-      ],
-    );
-
-    // CustomScrollView(
-    //   controller: _scrollController,
-    //   slivers: const [
-    //     ResponsiveSliverCenter(
-    //       padding: EdgeInsets.all(Sizes.p16),
-    //       child: SearchScreen(),
-    //     ),
-    //     ResponsiveSliverCenter(
-    //       padding: EdgeInsets.all(Sizes.p16),
-    //       child: AllTasksListScreen(),
-    //     ),
-    //   ],
-    // ),
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AsyncValueWidget(
+            value: searchedTasks,
+            data: (tasks) => tasks.toList().isEmpty
+                ? Center(
+                    child: Text('0 tasks found'.hardcoded,
+                        style: Theme.of(context).textTheme.bodyLarge),
+                  )
+                : Column(
+                    children: [
+                      TaskListWidget(tasks: searchedTasks.value ?? []),
+                    ],
+                  ),
+          ),
+        ]);
   }
 }

@@ -85,7 +85,6 @@ class MyDrawer extends StatelessWidget {
                 ),
                 title: const Text('Add task'),
               ),
-
             ListTile(
               leading: const Icon(Icons.search),
               title: const Text('Search'),
@@ -99,11 +98,9 @@ class MyDrawer extends StatelessWidget {
                 }
               },
             ),
-
             const Divider(
               height: 3,
             ),
-
             ListTile(
               key: allTasks,
               leading: const Icon(Icons.folder_special),
@@ -118,7 +115,6 @@ class MyDrawer extends StatelessWidget {
                 }
               },
             ),
-
             const Divider(
               height: 3,
             ),
@@ -154,7 +150,6 @@ class MyDrawer extends StatelessWidget {
                 }
               },
             ),
-
             const Divider(
               height: 3,
             ),
@@ -178,20 +173,8 @@ class MyDrawer extends StatelessWidget {
                 ],
               ),
             ),
-
-            /// ToDo: Dark theme switch
-            // BlocBuilder<SwitchBloc, SwitchState>(
-            //   builder: (context, state) {
-            //     return Switch(
-            //       value: state.switchValue,
-            //       onChanged: (newValue) {
-            //         newValue
-            //             ? context.read<SwitchBloc>().add(SwitchOnEvent())
-            //             : context.read<SwitchBloc>().add(SwitchOffEvent());
-            //       },
-            //     );
-            //   },
-            // )
+            // TODO: Dark theme switch
+            //const DarkThemeSwitch(),
           ],
         ),
       ),

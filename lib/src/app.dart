@@ -24,6 +24,12 @@ class MyApp extends ConsumerWidget {
             onBackground: const Color.fromARGB(66, 192, 188, 188),
             error: Colors.red,
             onTertiary: Colors.orange),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 6, 92, 8),
+            foregroundColor: Colors.white, // foreground (text) color
+          ),
+        ),
 
         // cardColor is used by ExpansionPanelList
         // cardColor: Color.fromARGB(255, 245, 243, 243),
@@ -31,12 +37,6 @@ class MyApp extends ConsumerWidget {
           backgroundColor: Colors.black87,
           foregroundColor: Colors.white,
           elevation: 0,
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black, // background (button) color
-            foregroundColor: Colors.white, // foreground (text) color
-          ),
         ),
       ),
     );

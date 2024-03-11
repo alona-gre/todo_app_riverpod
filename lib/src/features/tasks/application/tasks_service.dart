@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:riverpod_todo_app/src/features/tasks/data/local/local_tasks_repository.dart';
@@ -125,6 +127,18 @@ class TasksService {
   Stream<Task?> watchTask(String taskId) {
     return watchTasks().map((tasks) => _getTask(tasks, taskId));
   }
+
+  Stream<List<Task>> searchTasks(String query) {
+    // final user = ref.read(authRepositoryProvider).currentUser;
+    final user = ref.watch(authStateChangesProvider).value;
+    if (user != null) {
+      return ref
+          .read(remoteTasksRepositoryProvider)
+          .searchTasks(user.uid, query);
+    } else {
+      return ref.read(localTasksRepositoryProvider).searchTasks(query);
+    }
+  }
 }
 
 final tasksServiceProvider = Provider<TasksService>(
@@ -171,5 +185,21 @@ final isCompletedProvider = Provider.family<bool, String>((ref, taskId) {
 final taskProvider = StreamProvider.family<Task?, String>(
   (ref, taskId) {
     return ref.watch(tasksServiceProvider).watchTask(taskId);
+  },
+);
+
+final searchTasksProvider =
+    StreamProvider.autoDispose.family<List<Task>, String>(
+  (ref, query) {
+    // ref.onDispose(() => debugPrint('onDisposed: $query'));
+    // ref.onCancel(() => debugPrint('cancel: $query'));
+    final link = ref.keepAlive();
+    Timer(const Duration(seconds: 5), () {
+      link.close();
+    });
+
+    // * debounce/delay network requests
+    // * only works in combination with a CancelToken
+    return ref.watch(tasksServiceProvider).searchTasks(query);
   },
 );

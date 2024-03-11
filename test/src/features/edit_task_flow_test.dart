@@ -58,7 +58,8 @@ void main() {
       // log in
       await r.openPopupMenu();
       await r.auth.openEmailPasswordSignInScreen();
-      await r.auth.signInWithEmailAndPassword();
+      await r.auth.tapFormToggleButton();
+      await r.auth.fillAndSubmitEmailAndPassword();
 
       // TODO: verify the tasks are synced after login
       // await tester.runAsync(() async {

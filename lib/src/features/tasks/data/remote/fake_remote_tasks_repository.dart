@@ -191,4 +191,29 @@ class FakeRemoteTasksRepository implements RemoteTasksRepository {
     // Finally, update the tasks data (will emit a new value)
     _tasks.value = tasks;
   }
+
+  @override
+
+  /// Search for tasks where the title contains the search query
+  Stream<List<Task>> searchTasks(String uid, String query) {
+    assert(
+      _tasks.value.length <= 100,
+      'Client-side search should only be performed if the number of products is small. '
+      'Consider doing server-side search for larger datasets.',
+    );
+    // Get all tasks
+    final data = watchTasks(uid);
+    // Match all tasks where the title contains the query
+    final result = data.map(
+      (tasks) => tasks
+          .where(
+            (tsk) => tsk.title!.toLowerCase().contains(
+                  query.toLowerCase(),
+                ),
+          )
+          .toList(),
+    );
+
+    return result;
+  }
 }

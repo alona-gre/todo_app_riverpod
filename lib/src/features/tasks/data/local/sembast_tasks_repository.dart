@@ -99,4 +99,31 @@ class SembastTasksRepository implements LocalTasksRepository {
       throw Exception('Error setting tasks: $error');
     }
   }
+
+  @override
+
+  /// Search for tasks where the title contains the search query
+  Stream<List<Task>> searchTasks(String query) {
+    // Get all tasks
+    final tasksStream = watchTasks();
+
+    // Stream-aware approach for comparison and assertion
+    return tasksStream.map((tasks) {
+      assert(
+        tasks.length <= 100,
+        'Client-side search should only be performed if the number of tasks is small. '
+        'Consider doing server-side search for larger datasets.',
+      );
+      // Match all tasks where the title contains the query
+      final result = tasks
+          .where(
+            (tsk) => tsk.title!.toLowerCase().contains(
+                  query.toLowerCase(),
+                ),
+          )
+          .toList();
+
+      return result;
+    });
+  }
 }

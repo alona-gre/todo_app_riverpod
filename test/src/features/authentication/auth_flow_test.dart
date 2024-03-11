@@ -9,7 +9,8 @@ void main() {
     // r.expectFindAllTaskTiles();
     await r.openPopupMenu();
     await r.auth.openEmailPasswordSignInScreen();
-    await r.auth.signInWithEmailAndPassword();
+    await r.auth.tapFormToggleButton();
+    await r.auth.fillAndSubmitEmailAndPassword();
     // r.expectFindAllTaskTiles();
     await r.openPopupMenu();
     await r.auth.openAccountScreen();

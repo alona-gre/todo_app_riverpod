@@ -21,9 +21,6 @@ class TaskListWidget extends ConsumerWidget {
       child: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) => Dismissible(
-          // Each Dismissible must contain a Key. Keys allow Flutter to
-          // uniquely identify widgets.
-
           key: ValueKey('${tasks[index].id} '),
           confirmDismiss: (direction) async {
             if (direction == DismissDirection.startToEnd) {

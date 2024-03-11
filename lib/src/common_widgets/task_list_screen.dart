@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_todo_app/src/common_widgets/responsive_center.dart';
 import 'package:riverpod_todo_app/src/common_widgets/responsive_scrollable_column.dart';
 import 'package:riverpod_todo_app/src/common_widgets/responsive_two_column_layout.dart';
 import 'package:riverpod_todo_app/src/constants/app_sizes.dart';
 import 'package:riverpod_todo_app/src/constants/breakpoints.dart';
 import 'package:riverpod_todo_app/src/features/app_drawer/presentation/app_drawer.dart';
+import 'package:riverpod_todo_app/src/features/search/presentation/tasks_search_field.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/functions/add_task/add_task_widget.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/tasklists/completed/completed_tasks_screen.dart';
 import 'package:riverpod_todo_app/src/features/tasks/presentation/tasklists/starred/starred_tasks_screen.dart';
@@ -56,16 +58,25 @@ class TaskListScreen extends ConsumerWidget {
       body: screenWidth < Breakpoint.desktop
           ? CustomScrollView(
               slivers: [
-                ResponsiveSliverColumn(
+                ResponsiveSliverCenter(
                     padding: const EdgeInsets.all(Sizes.p8),
                     child:
                         // push to different routes based on selected option
                         switch (option) {
-                      DrawerOption.search => const SearchScreen(),
-                      DrawerOption.allTasks => const AllTasksScreen(),
-                      DrawerOption.starredTasks => const StarredTasksScreen(),
-                      DrawerOption.completed => const CompletedTasksScreen(),
+                      DrawerOption.search => const TasksSearchTextField(),
+                      DrawerOption.allTasks => const SizedBox.shrink(),
+                      DrawerOption.starredTasks => const SizedBox.shrink(),
+                      DrawerOption.completed => const SizedBox.shrink(),
                     }),
+                ResponsiveSliverColumn(
+                    child:
+                        // push to different routes based on selected option
+                        switch (option) {
+                  DrawerOption.search => const SearchScreen(),
+                  DrawerOption.allTasks => const AllTasksScreen(),
+                  DrawerOption.starredTasks => const StarredTasksScreen(),
+                  DrawerOption.completed => const CompletedTasksScreen(),
+                }),
               ],
             )
           : ResponsiveTwoColumnLayout(
@@ -80,6 +91,16 @@ class TaskListScreen extends ConsumerWidget {
               spacing: Sizes.p4,
               endContent: CustomScrollView(
                 slivers: [
+                  ResponsiveSliverCenter(
+                      padding: const EdgeInsets.all(Sizes.p8),
+                      child:
+                          // push to different routes based on selected option
+                          switch (option) {
+                        DrawerOption.search => const TasksSearchTextField(),
+                        DrawerOption.allTasks => const SizedBox.shrink(),
+                        DrawerOption.starredTasks => const SizedBox.shrink(),
+                        DrawerOption.completed => const SizedBox.shrink(),
+                      }),
                   ResponsiveSliverColumn(
                       padding: const EdgeInsets.all(Sizes.p8),
                       child:

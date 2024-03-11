@@ -37,6 +37,8 @@ abstract class RemoteTasksRepository {
     String uid,
     List<Task> updatedRemoteTasks,
   );
+
+  Stream<List<Task>> searchTasks(String uid, String query);
 }
 
 final remoteTasksRepositoryProvider = Provider<RemoteTasksRepository>(
