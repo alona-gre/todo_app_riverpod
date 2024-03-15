@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_state.dart';
+import 'package:riverpod_todo_app/src/features/authentication/presentation/sign_in/email_password_sign_in_form_type.dart';
 
-import '../../../mocks.dart';
-import '../auth_robot.dart';
+import '../../../../mocks.dart';
+import '../../auth_robot.dart';
 
 void main() {
   const testEmail = 'test@test.com';

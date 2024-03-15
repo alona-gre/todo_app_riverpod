@@ -6,8 +6,8 @@ import 'package:riverpod_todo_app/src/common_widgets/custom_text_button.dart';
 import 'package:riverpod_todo_app/src/common_widgets/primary_button.dart';
 import 'package:riverpod_todo_app/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:riverpod_todo_app/src/features/authentication/presentation/account/account_screen.dart';
-import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_screen.dart';
-import 'package:riverpod_todo_app/src/features/authentication/sign_in/email_password_sign_in_state.dart';
+import 'package:riverpod_todo_app/src/features/authentication/presentation/sign_in/email_password_sign_in_form_type.dart';
+import 'package:riverpod_todo_app/src/features/authentication/presentation/sign_in/email_password_sign_in_screen.dart';
 import 'package:riverpod_todo_app/src/features/home_app_bar/more_menu_button.dart';
 
 class AuthRobot {

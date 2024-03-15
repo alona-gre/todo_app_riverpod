@@ -67,6 +67,7 @@ void main() {
         const expectedTask = Task(title: 'abc', notes: 'notes');
         // TODO: fix. Works with the following
         // when(() => authRepository.currentUser).thenReturn(testUser);
+
         when(authRepository.authStateChanges)
             .thenAnswer((_) => Stream.value(testUser));
         when(() => remoteTasksRepository.insertTask(testUser.uid, expectedTask))
